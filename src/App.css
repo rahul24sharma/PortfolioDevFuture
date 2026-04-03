@@ -2679,7 +2679,8 @@ main > section:not(.hero) {
   position: fixed;
   right: clamp(0.75rem, 3vw, 1.5rem);
   top: 5.25rem;
-  z-index: 52;
+  /* Above read HUD (55) and mobile UI layers so the button stays tappable */
+  z-index: 70;
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -2744,19 +2745,27 @@ main > section:not(.hero) {
 .command-palette-overlay {
   position: fixed;
   inset: 0;
-  z-index: 200;
+  width: 100%;
+  min-height: 100dvh;
+  z-index: 10000;
+  isolation: isolate;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 10vh 1rem 2rem;
+  padding: max(0.75rem, env(safe-area-inset-top)) 1rem max(0.75rem, env(safe-area-inset-bottom));
+  box-sizing: border-box;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
 }
 
 .command-palette-backdrop {
   position: absolute;
   inset: 0;
+  z-index: 0;
   border: 0;
-  background: rgb(var(--ch-bg) / 0.72);
-  backdrop-filter: blur(6px);
+  background: rgb(var(--ch-bg) / 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   cursor: default;
 }
 
@@ -2764,7 +2773,8 @@ main > section:not(.hero) {
   position: relative;
   z-index: 1;
   width: min(100%, 28rem);
-  max-height: min(70vh, 520px);
+  max-height: min(72dvh, 520px);
+  min-height: 12rem;
   display: flex;
   flex-direction: column;
   border-radius: 14px;
@@ -2778,6 +2788,14 @@ main > section:not(.hero) {
   background: #ffffff;
   border-color: rgba(37, 99, 235, 0.2);
   box-shadow: 0 24px 60px rgb(var(--ch-surface) / 0.15);
+}
+
+@media (max-width: 768px) {
+  .command-palette-backdrop {
+    /* Safer on iOS: heavy backdrop + fixed layers sometimes fail to composite */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
 }
 
 .command-palette-search input {
@@ -2799,6 +2817,7 @@ main > section:not(.hero) {
   padding: 0.35rem;
   overflow-y: auto;
   flex: 1;
+  min-height: 0;
 }
 
 .command-palette-item {
