@@ -35,6 +35,8 @@ function HeroCanvas() {
   const [heroVisible, setHeroVisible] = useState(true)
   /** Cap pixel ratio on small / low-power viewports for smoother scrolling site-wide. */
   const [dpr, setDpr] = useState(() => [1, 2])
+  /** WebGL context ready — hides boot overlay. */
+  const [glReady, setGlReady] = useState(false)
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -78,11 +80,26 @@ function HeroCanvas() {
   }
 
   return (
-    <div className="hero-canvas-wrap" aria-hidden>
+    <div className="hero-canvas-wrap">
+      <div
+        className={`hero-canvas-boot ${glReady ? 'hero-canvas-boot--ready' : ''}`}
+        role="status"
+        aria-live="polite"
+        aria-busy={!glReady}
+        aria-hidden={glReady}
+      >
+        <span className="visually-hidden">{glReady ? 'Scene ready' : 'Initializing WebGL'}</span>
+        <div className="hero-canvas-loader hero-canvas-loader--compact" aria-hidden>
+          <span className="hero-canvas-loader__ring" />
+          <span className="hero-canvas-loader__label">Starting scene…</span>
+        </div>
+      </div>
       <Canvas
+        aria-hidden
         camera={{ position: [0.65, 0.15, 7.2], fov: 40 }}
         dpr={dpr}
         frameloop={heroVisible ? 'always' : 'never'}
+        onCreated={() => setGlReady(true)}
         gl={{
           antialias: true,
           alpha: false,

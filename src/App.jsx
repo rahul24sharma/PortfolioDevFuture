@@ -21,13 +21,21 @@ function CanvasFallback() {
   return (
     <div
       className="hero-fallback hero-fallback--loading"
-      aria-hidden
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
       style={{
         position: 'absolute',
         inset: 0,
         background,
       }}
-    />
+    >
+      <span className="visually-hidden">Loading hero scene</span>
+      <div className="hero-canvas-loader" aria-hidden>
+        <span className="hero-canvas-loader__ring" />
+        <span className="hero-canvas-loader__label">Loading scene…</span>
+      </div>
+    </div>
   )
 }
 
@@ -208,7 +216,9 @@ function App() {
           ))}
         </nav>
         <div className="top-nav__end">
-          <NavPrefs />
+          <div className="top-nav__prefs top-nav__prefs--header">
+            <NavPrefs />
+          </div>
           <button
             type="button"
             className="nav-mobile-toggle"
@@ -246,7 +256,7 @@ function App() {
             </svg>
           </button>
           <motion.a
-            className="nav-cta nav-cta--premium"
+            className="nav-cta nav-cta--premium nav-cta--header"
             href={D.navbar.connectUrl}
             target="_blank"
             rel="noreferrer"
@@ -286,6 +296,23 @@ function App() {
                 </li>
               ))}
             </ul>
+            <div className="nav-mobile__footer">
+              <p className="nav-mobile__title">Appearance</p>
+              <div className="nav-mobile__prefs">
+                <NavPrefs />
+              </div>
+              <a
+                href={D.navbar.connectUrl}
+                className="nav-mobile__cta"
+                target="_blank"
+                rel="noreferrer"
+                onClick={closeMobileNav}
+              >
+                <IconLinkedIn className="nav-mobile__cta-icon" />
+                <span>LinkedIn</span>
+                <IconArrowUpRight className="nav-mobile__cta-arrow" />
+              </a>
+            </div>
           </nav>
         </div>
       ) : null}
