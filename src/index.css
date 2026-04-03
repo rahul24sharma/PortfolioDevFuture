@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600&family=Syne:wght@600;700;800&display=swap');
+
+:root {
+  --font-display: 'Syne', system-ui, sans-serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  --accent: #2563eb;
+  --accent-bright: #38bdf8;
+
+  --bg-deep: #020617;
+  --surface-elevated: #0f172a;
+  --stroke: rgba(56, 189, 248, 0.12);
+
+  /* RGB channels for `rgb(var(--ch-*) / opacity)` — theme-aware surfaces */
+  --ch-bg: 2 6 23;
+  --ch-surface: 15 23 42;
+  --ch-slate-800: 30 41 59;
+  --bg-mid: #0a0f1c;
+  /** Text on bright cyan/blue buttons */
+  --text-on-accent: #020617;
+
+  --glass: rgb(var(--ch-surface) / 0.45);
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --shadow-card:
+    0 4px 24px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-card-hover:
+    0 12px 48px rgba(37, 99, 235, 0.15),
+    0 4px 24px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text-muted);
+  background-color: var(--bg-deep);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Instant scroll on small screens avoids jank from smooth-scroll + animations. */
+@media (max-width: 768px) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(37, 99, 235, 0.22), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(79, 70, 229, 0.12), transparent),
+    var(--bg-deep);
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  border: none;
+  min-height: 100svh;
+  text-align: left;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+a {
+  color: inherit;
+}
+
+/* Light theme — toggled via AppPreferencesProvider (documentElement dataset.theme) */
+:root[data-theme='light'] {
+  --text-primary: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+  --accent: #2563eb;
+  --accent-bright: #0284c7;
+  --bg-deep: #f1f5f9;
+  --surface-elevated: #ffffff;
+  --glass: rgba(255, 255, 255, 0.78);
+  --stroke: rgba(37, 99, 235, 0.14);
+  --ch-bg: 241 245 249;
+  --ch-surface: 255 255 255;
+  --ch-slate-800: 226 232 240;
+  --bg-mid: #e2e8f0;
+  --text-on-accent: #0f172a;
+  --shadow-card:
+    0 4px 24px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --shadow-card-hover:
+    0 12px 40px rgba(37, 99, 235, 0.12),
+    0 4px 16px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+:root[data-theme='light'] body {
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(37, 99, 235, 0.14), transparent 50%),
+    radial-gradient(ellipse 60% 40% at 100% 50%, rgba(79, 70, 229, 0.08), transparent),
+    var(--bg-deep);
+}
